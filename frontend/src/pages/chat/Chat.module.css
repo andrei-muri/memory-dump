@@ -1,0 +1,222 @@
+.chatWrapper {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* Ensure wrapper takes full viewport height */
+    overflow: hidden;
+    /* Prevent wrapper from expanding */
+}
+
+.chatContainer {
+    display: flex;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    /* Subtract header height (assumed 60px) */
+    overflow: hidden;
+    /* Prevent container from expanding */
+}
+
+.friendsSidebar {
+    width: 25%;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    padding: 10px;
+    overflow-y: auto;
+    height: 100%;
+    /* Take full height of chatContainer */
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebarTitle {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+.friendItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.friendItem:hover,
+.friendItem.selected {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.profilePicture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.friendName {
+    font-size: 16px;
+    margin-right: 10px;
+    flex: 1;
+}
+
+.statusIndicator {
+    width: 10px;
+    height: 10px;
+    background-color: #4caf50;
+    border-radius: 50%;
+}
+
+.noFriends {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    padding: 10px;
+    flex-shrink: 0;
+}
+
+.chatArea {
+    width: 75%;
+    background-color: #fff;
+    border-left: 1px solid #ddd;
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    /* Take full height of chatContainer */
+    overflow: hidden;
+    /* Prevent chatArea from expanding */
+}
+
+.chatHeader {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;
+    /* Prevent header from shrinking */
+}
+
+.chatTitle {
+    font-size: 18px;
+    color: #333;
+}
+
+.messagesContainer {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f5f5f5;
+}
+
+.messagesContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messagesContainer::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.messagesContainer::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+    border: 2px solid #f5f5f5;
+}
+
+.messagesContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+.message {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sent {
+    background-color: #0084ff;
+    color: #fff;
+    align-self: flex-end;
+}
+
+.received {
+    background-color: #e9ecef;
+    color: #333;
+    align-self: flex-start;
+}
+
+.messageContent {
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.messageTimestamp {
+    font-size: 12px;
+    color: #666;
+    align-self: flex-end;
+    margin-top: 5px;
+}
+
+.inputArea {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    flex-shrink: 0;
+    /* Prevent input area from shrinking */
+}
+
+.messageInput {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.sendButton {
+    padding: 8px 15px;
+    background-color: #0084ff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sendButton:hover {
+    background-color: #0066cc;
+}
+
+.noChatSelected {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+    flex-shrink: 0;
+}

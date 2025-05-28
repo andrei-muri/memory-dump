@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Messaging</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; }
+        .login, .chat { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        input, button { padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px); }
+        button { background-color: #1877f2; color: white; border: none; cursor: pointer; width: auto; }
+        button:hover { background-color: #166fe5; }
+        #messages { height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px; margin-bottom: 10px; background: #fff; }
+        .message { padding: 8px; margin: 5px 0; border-radius: 8px; }
+        .sent { background: #e7f3ff; margin-left: 20%; text-align: right; }
+        .received { background: #f0f0f0; margin-right: 20%; }
+        .error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login" id="login">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="token" placeholder="JWT Token">
+        <button onclick="connect()">Connect</button>
+        <div id="login-error" class="error"></div>
+    </div>
+    <div class="chat" id="chat" style="display: none;">
+        <h2>Chat</h2>
+        <input type="text" id="recipient" placeholder="Recipient Username">
+        <div id="messages"></div>
+        <input type="text" id="message" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="disconnect()">Disconnect</button>
+        <div id="chat-error" class="error"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        let stompClient = null;
+        let currentUsername = '';
+
+        function showError(elementId, message) {
+            document.getElementById(elementId).textContent = message;
+            console.error(message);
+        }
+
+        function clearErrors() {
+            document.getElementById('login-error').textContent = '';
+            document.getElementById('chat-error').textContent = '';
+        }
+
+        function connect() {
+            const username = document.getElementById('username').value.trim();
+            const token = document.getElementById('token').value.trim();
+
+            if (!username || !token) {
+                showError('login-error', 'Please enter username and token');
+                return;
+            }
+
+            clearErrors();
+            currentUsername = username;
+
+            try {
+                const wsUrl = `ws://localhost:8080/ws-chat?access_token=${encodeURIComponent(token)}`;
+                console.log('Connecting to WebSocket:', wsUrl);
+                stompClient = Stomp.client(wsUrl);
+                stompClient.connect(
+                    {},
+                    () => {
+                        console.log('Connected to WebSocket');
+                        document.getElementById('login').style.display = 'none';
+                        document.getElementById('chat').style.display = 'block';
+
+                        // Subscribe to message history
+                        stompClient.subscribe('/app/messages', (message) => {
+                            try {
+                                const body = JSON.parse(message.body);
+                                if (Array.isArray(body)) {
+                                    body.forEach(msg => showMessage(msg.senderUsername, msg.content, msg.senderUsername === currentUsername));
+                                } else {
+                                    showMessage(body.senderUsername, body.content, body.senderUsername === currentUsername);
+                                }
+                            } catch (e) {
+                                console.error('Failed to parse message:', e, message.body);
+                            }
+                        });
+
+                        // Subscribe to real-time messages
+                        stompClient.subscribe('/user/queue/messages', (message) => {
+                            try {
+                                const body = JSON.parse(message.body);
+                                if (Array.isArray(body)) {
+                                    body.forEach(msg => showMessage(msg.senderUsername, msg.content, msg.senderUsername === currentUsername));
+                                } else {
+                                    showMessage(body.senderUsername, body.content, body.senderUsername === currentUsername);
+                                }
+                            } catch (e) {
+                                console.error('Failed to parse message:', e, message.body);
+                            }
+                        });
+                    },
+                    (error) => {
+                        console.error('Connection error:', error);
+                        showError('login-error', 'Failed to connect: ' + (error.message || 'Check token and server'));
+                    }
+                );
+            } catch (e) {
+                showError('login-error', 'Connection setup failed: ' + e.message);
+            }
+        }
+
+        function sendMessage() {
+            const recipient = document.getElementById('recipient').value.trim();
+            const content = document.getElementById('message').value.trim();
+
+            if (!recipient || !content) {
+                showError('chat-error', 'Please enter recipient and message');
+                return;
+            }
+
+            clearErrors();
+
+            if (stompClient && stompClient.connected) {
+                try {
+                    stompClient.send(
+                        '/app/message/send',
+                        {},
+                        JSON.stringify({ recipientUsername: recipient, content: content })
+                    );
+                    showMessage(currentUsername, content, true);
+                    document.getElementById('message').value = '';
+                } catch (e) {
+                    showError('chat-error', 'Failed to send message: ' + e.message);
+                }
+            } else {
+                showError('chat-error', 'Not connected to WebSocket');
+            }
+        }
+
+        function showMessage(sender, content, isSent) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+            messageDiv.textContent = `${sender}: ${content}`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function disconnect() {
+            if (stompClient && stompClient.connected) {
+                try {
+                    stompClient.disconnect(() => {
+                        console.log('Disconnected');
+                        document.getElementById('login').style.display = 'block';
+                        document.getElementById('chat').style.display = 'none';
+                        document.getElementById('messages').innerHTML = '';
+                        stompClient = null;
+                        currentUsername = '';
+                    });
+                } catch (e) {
+                    showError('chat-error', 'Failed to disconnect: ' + e.message);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

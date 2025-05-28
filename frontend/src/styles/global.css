@@ -1,0 +1,44 @@
+:root {
+    /* Light Theme (default) */
+    --color-primary: #393E41;
+    --color-secondary: #D3D0CB;
+    --color-tertiary: #E7E5DF;
+    --color-accent: #44BBA4;
+    --color-highlight: #E7BB41;
+    --color-error: #EF0212;
+  
+    --background: #FFFFFF;
+    --background-secondary: #F9F9F9;
+    --text-primary: #393E41;
+    --text-secondary: #666666;
+    --border: #D3D0CB;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+:root[data-theme="dark"] {
+  --background: #1E1E1E;
+  --background-secondary: #2D2D2D;
+  --text-primary: #E7E5DF;
+  --text-secondary: #AAAAAA;
+  --border: #444444;
+  --shadow: rgba(255, 255, 255, 0.1);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 0 16px;
+}

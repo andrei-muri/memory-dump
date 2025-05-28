@@ -1,0 +1,8 @@
+backend/MemDumpBackend/logs/
+backend/MemDumpBackend/src/main/resources/keys
+backend/MemDumpBackend/HELP.md
+backend/MemDumpBackend/MemDumpBackend.iml
+backend/MemDumpBackend/mvnw
+backend/MemDumpBackend/mvnw.cmd
+backend/MemDumpBackend/target
+

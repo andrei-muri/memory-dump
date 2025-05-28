@@ -1,0 +1,14 @@
+.themeButton {
+    background-color: var(--color-accent);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .themeButton:hover {
+    background-color: #3A9A87;
+  }

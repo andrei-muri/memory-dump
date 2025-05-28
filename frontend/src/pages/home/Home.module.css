@@ -1,0 +1,115 @@
+.homeWrapper {
+    background-color: var(--background);
+    min-height: 100vh;
+}
+
+.homeContainer {
+    max-width: 1264px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-secondary);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    /* Space between profile and posts */
+}
+
+.profileSection {
+    width: 200px;
+    flex-shrink: 0;
+    background-color: var(--background-secondary);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+}
+
+.profilePicture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 16px;
+    object-fit: cover;
+    
+}
+
+.profileName {
+    font-size: 18px;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+.postSection {
+    flex: 1;
+    /* Takes remaining space */
+}
+
+.title {
+    font-size: 28px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.postList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.postItem {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--background);
+    cursor: pointer;
+}
+
+.score {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-right: 10px;
+}
+
+.postTitle {
+    font-size: 16px;
+    color: var(--color-highlight);
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.postTitle:hover {
+    text-decoration: underline;
+}
+
+.meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.tag {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.author {
+    margin-left: 10px;
+}
+
+.username {
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.username:hover {
+    text-decoration: underline;
+    color: var(--color-accent);
+}
