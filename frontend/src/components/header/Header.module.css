@@ -74,3 +74,15 @@
 .signupButton:hover {
     background-color: #3A9A87;
 }
+
+.languageButton {
+    background-color: #444;
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.languageButton:hover {
+    background-color: #555; 
+    cursor: pointer;
+}

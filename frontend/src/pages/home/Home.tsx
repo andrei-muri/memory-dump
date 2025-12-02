@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       {isLoggedIn && hasProfile && (
         <div className={styles.profileSection} onClick={() => navigate(`/profile/${user?.username}`)}>
           <img
-            src={ProfileService.getProfilePictureUrl(user?.username) || '/default-profile.png'} // Fallback to default image
+            src={ProfileService.getProfilePictureUrl(user?.username) || '../../../public/default.jpg'} // Fallback to default image
             alt={`${user?.username}'s profile`}
             className={styles.profilePicture}
           />

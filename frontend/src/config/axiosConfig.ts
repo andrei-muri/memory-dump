@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { REFRESH_ENDPOINT } from '../endpoints/endpoints';
+import i18n from "i18next";
 
 // Function to refresh the access token
 const refreshAccessToken = async () => {
@@ -28,6 +29,7 @@ const refreshAccessToken = async () => {
 axios.interceptors.request.use(
   (config) => {
     const accessToken = sessionStorage.getItem('token');
+    config.headers["Accept-Language"] = i18n.language;
     if (accessToken) {
       config.headers = config.headers || {};
       config.headers.set('Authorization', `Bearer ${accessToken}`);

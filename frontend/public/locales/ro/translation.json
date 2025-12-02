@@ -1,0 +1,22 @@
+{
+    "header": {
+        "searchPlaceholder": "Caută...",
+        "chat": "Chat",
+        "friends": "Prieteni",
+        "create": "Creează",
+        "setProfile": "Setează profilul",
+        "logout": "Deconectare",
+        "login": "Autentificare",
+        "signup": "Înregistrare"
+    },
+    "login": {
+        "title": "Autentificare",
+        "username": "Nume de utilizator",
+        "usernamePlaceholder": "Introdu numele de utilizator",
+        "password": "Parolă",
+        "passwordPlaceholder": "Introdu parola",
+        "submit": "Autentificare",
+        "forgotPassword": "Ai uitat parola?",
+        "error": "{{error}}"
+    }
+}
